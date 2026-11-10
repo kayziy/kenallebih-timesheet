@@ -1,5 +1,6 @@
 "use client";
 import { useRef } from "react";
+import { useFormStatus } from "react-dom";
 import { carryTask, deleteTask, updateTask } from "@/app/actions";
 import type { Task } from "@/lib/store";
 
@@ -9,13 +10,19 @@ const OPTIONS = [
   ["done", "Beres"],
 ] as const;
 
+/** Penanda kecil "Menyimpan…" selama form tugas diproses. */
+function Saving() {
+  const { pending } = useFormStatus();
+  return pending ? <span className="muted">Menyimpan…</span> : null;
+}
+
 export default function TaskRow({ task, carry = false }: { task: Task; carry?: boolean }) {
   const form = useRef<HTMLFormElement>(null);
   const saved = useRef(task.result);
   return (
     <form ref={form} action={updateTask} className={`task ${task.status}`}>
       <input type="hidden" name="id" value={task.id} />
-      <div className="task-text">{task.text}</div>
+      <div className="task-text">{task.text} <Saving /></div>
       <div className="pills">
         {OPTIONS.map(([v, label]) => (
           <label key={v} className={`pill ${v}`}>

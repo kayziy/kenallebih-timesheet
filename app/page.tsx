@@ -6,6 +6,7 @@ import KpiBar from "@/components/KpiBar";
 import KpiForm from "@/components/KpiForm";
 import KpiTag from "@/components/KpiTag";
 import PinForm from "@/components/PinForm";
+import SubmitButton from "@/components/SubmitButton";
 import TaskRow from "@/components/TaskRow";
 import Top from "@/components/Top";
 
@@ -46,7 +47,7 @@ export default async function Today() {
         {todayTasks.map((t) => <TaskRow key={t.id} task={t} />)}
         <form action={addTasks} className="row" style={{ flexDirection: "column", alignItems: "stretch", marginTop: 10 }}>
           <textarea name="text" placeholder={"Satu baris satu tugas, contoh:\nBikin 2 reels\nRevisi caption klien A"} required />
-          <button className="btn go">Tambah ke rencana</button>
+          <SubmitButton className="btn go">Tambah ke rencana</SubmitButton>
         </form>
         <p className="muted" style={{ marginBottom: 0 }}>Malamnya tinggal tandai Belum / Proses / Beres, dan isi hasilnya (boleh link).</p>
       </section>
@@ -69,7 +70,7 @@ export default async function Today() {
           <input name="date" type="date" defaultValue={today} required aria-label="Tanggal" />
           <input name="start" type="time" required aria-label="Mulai" />
           <input name="end" type="time" required aria-label="Selesai" />
-          <button className="btn">Tambah</button>
+          <SubmitButton>Tambah</SubmitButton>
         </form>
         <p className="muted">Kerja terpisah? Tambahkan tiap blok, misal pagi 08:00–12:00 lalu malam 19:00–23:00. Lewat tengah malam juga bisa.</p>
         {days.length === 0 && <p className="muted">Belum ada jam minggu ini.</p>}
@@ -82,7 +83,7 @@ export default async function Today() {
                 <form action={deleteEntry} className="entry" key={e.id}>
                   <input type="hidden" name="id" value={e.id} />
                   <span>{e.start}–{e.end} <span className="muted">({fmtHours(entryMs(e.start, e.end))})</span></span>
-                  <button className="btn ghost small" aria-label="Hapus blok jam">✕</button>
+                  <SubmitButton className="btn ghost small" pending="…" label="Hapus blok jam">✕</SubmitButton>
                 </form>
               ))}
             </div>
@@ -106,9 +107,9 @@ export default async function Today() {
                 <form action={addTick} className="row" style={{ flex: "1 1 auto" }}>
                   <input type="hidden" name="kpiId" value={k.id} />
                   <input name="amount" type="number" step="any" defaultValue={1} style={{ maxWidth: 90 }} aria-label="Jumlah" />
-                  <button className="btn teal small">+ Tambah progres</button>
+                  <SubmitButton className="btn teal small">+ Tambah progres</SubmitButton>
                 </form>
-                <form action={deleteKpi}><input type="hidden" name="id" value={k.id} /><button className="btn ghost small">Hapus</button></form>
+                <form action={deleteKpi}><input type="hidden" name="id" value={k.id} /><SubmitButton className="btn ghost small" pending="…">Hapus</SubmitButton></form>
               </div>
             </div>
           );

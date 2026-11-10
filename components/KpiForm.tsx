@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { addKpi } from "@/app/actions";
+import SubmitButton from "./SubmitButton";
 
 export default function KpiForm() {
   const [period, setPeriod] = useState("weekly");
@@ -22,7 +23,7 @@ export default function KpiForm() {
         <option value="deadline">Deadline</option>
       </select>
       {period === "deadline" && <input name="deadline" type="date" required aria-label="Tanggal deadline" style={{ maxWidth: 170 }} />}
-      <button className="btn">Tambah</button>
+      <SubmitButton>Tambah</SubmitButton>
     </form>
   );
 }
